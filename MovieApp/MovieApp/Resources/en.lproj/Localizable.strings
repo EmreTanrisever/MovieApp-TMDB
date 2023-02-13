@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  MovieApp
+
+  Created by Emre Tanrısever on 13.02.2023.
+  
+*/
+
+TabBar.home = "Movie List";
+TabBar.discover = "Discover";
+TabBar.bookmark = "Bookmark";
