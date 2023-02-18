@@ -6,6 +6,8 @@
   
 */
 
+AppName = "FilmKu";
+
 TabBar.home = "Film Listesi";
 TabBar.discover = "Keşfet";
 TabBar.bookmark = "Kaydedilenler";

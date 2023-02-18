@@ -6,6 +6,9 @@
   
 */
 
+AppName = "FilmKu";
+
 TabBar.home = "Movie List";
 TabBar.discover = "Discover";
 TabBar.bookmark = "Bookmark";
+
