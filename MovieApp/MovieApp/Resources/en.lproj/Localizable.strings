@@ -12,3 +12,6 @@ TabBar.home = "Movie List";
 TabBar.discover = "Discover";
 TabBar.bookmark = "Bookmark";
 
+Home.firstTitle = "Now Showing";
+Home.seeMoreButtonTitle = "See More";
+
