@@ -65,8 +65,6 @@ class HomeController: UIViewController {
         
         configureUI()
         
-        let nowplayingrequest = NowPlayingMovieRequest()
-        print(nowplayingrequest.createURL())
     }
 
     @objc private func seeMoreButtonTapped(_ sender: UIButton) {
