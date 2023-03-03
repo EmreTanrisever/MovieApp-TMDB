@@ -9,6 +9,7 @@ import UIKit
 
 protocol HomeViewInterface: AnyObject {
     func prepareCollectionView()
+    func deneme()
 }
 
 class HomeController: UIViewController {
@@ -55,14 +56,12 @@ class HomeController: UIViewController {
         return collectionView
     }()
     
-    private lazy var viewModel = HomeViewModel()
+    private lazy var viewModel = HomeViewModel(self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewModel.view = self
         viewModel.viewDidLoad()
-        
         configureUI()
         
     }
@@ -74,6 +73,10 @@ class HomeController: UIViewController {
 
 extension HomeController: HomeViewInterface, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    func deneme() {
+        carouselCollectionView.reloadData()
+    }
+    
     func prepareCollectionView() {
         carouselCollectionView.delegate = self
         carouselCollectionView.dataSource = self
@@ -81,11 +84,12 @@ extension HomeController: HomeViewInterface, UICollectionViewDelegate, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        10
+        viewModel.nowPlayingMovies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = carouselCollectionView.dequeueReusableCell(withReuseIdentifier: HorizontalMovieCell.identifier, for: indexPath) as? HorizontalMovieCell else { return UICollectionViewCell() }
+        cell.setData(movie: viewModel.nowPlayingMovies[indexPath.row])
         return cell
     }
     

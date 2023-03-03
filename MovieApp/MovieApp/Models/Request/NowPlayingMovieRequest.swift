@@ -8,6 +8,8 @@
 import Foundation
 
 final class NowPlayingMovieRequest: BaseRequestModel {
+    static let shared = NowPlayingMovieRequest()
+    
     override var path: String {
         "/3/movie/now_playing"
     }

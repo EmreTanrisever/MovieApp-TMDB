@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class HorizontalMovieCell: UICollectionViewCell {
     static let identifier = "HorizontalMovieCell"
@@ -13,7 +14,8 @@ class HorizontalMovieCell: UICollectionViewCell {
     private let moviePosterImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "face.smiling")
+        imageView.layer.cornerRadius = 8
+        imageView.layer.masksToBounds = true
         return imageView
     }()
     
@@ -56,6 +58,17 @@ class HorizontalMovieCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         configure()
+    }
+}
+
+extension HorizontalMovieCell {
+    func setData(movie: Movie) {
+        movieNameLabel.text = movie.title
+        ratingLabel.text = "\(movie.voteAvarage)/10 IMDB"
+        DispatchQueue.main.async {
+            let url = "https://image.tmdb.org/t/p/w500" + movie.posterPath!
+            self.moviePosterImageView.kf.setImage(with: URL(string: url))
+        }
     }
 }
 
