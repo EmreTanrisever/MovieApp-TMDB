@@ -9,7 +9,7 @@ import UIKit
 
 protocol HomeViewInterface: AnyObject {
     func prepareCollectionView()
-    func deneme()
+    func collectionViewReloadData()
 }
 
 class HomeController: UIViewController {
@@ -73,7 +73,7 @@ class HomeController: UIViewController {
 
 extension HomeController: HomeViewInterface, UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func deneme() {
+    func collectionViewReloadData() {
         carouselCollectionView.reloadData()
     }
     

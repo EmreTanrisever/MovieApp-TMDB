@@ -40,7 +40,7 @@ extension HomeViewModel: HomeViewModelInterface {
             case .success(let movies):
                 DispatchQueue.main.async {
                     self.nowPlayingMovies = movies.results
-                    self.view?.deneme()
+                    self.view?.collectionViewReloadData()
                 }
             case .failure(let error):
                 print(error)
