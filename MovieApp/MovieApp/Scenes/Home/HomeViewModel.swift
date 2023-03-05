@@ -20,6 +20,7 @@ final class HomeViewModel {
     private let service = NetworkService()
     
     var nowPlayingMovies: [Movie] = []
+    var moviesCategory = ["Popular": [Movie](), "Top Rated": [Movie](), "Up Coming": [Movie]()].sorted(by: {$0.0 < $1.0})
     
     init(_ view: HomeViewInterface) {
         self.view = view
@@ -32,6 +33,7 @@ extension HomeViewModel: HomeViewModelInterface {
     func viewDidLoad() {
         getData()
         view?.prepareCollectionView()
+        view?.prepareTableView()
     }
     
     func getData() {

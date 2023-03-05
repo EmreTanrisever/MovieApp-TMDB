@@ -33,6 +33,7 @@
 		8BD8D0C2299AA79400A488EC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD8D0C1299AA79400A488EC /* TabBarController.swift */; };
 		8BD8D0C8299AB01F00A488EC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD8D0C7299AB01F00A488EC /* String.swift */; };
 		8BD8D0CB299AB08900A488EC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8BD8D0CD299AB08900A488EC /* Localizable.strings */; };
+		8BDDCEB729B3CFA200D9F173 /* MoviesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDDCEB629B3CFA200D9F173 /* MoviesTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		8BD8D0C7299AB01F00A488EC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		8BD8D0CC299AB08900A488EC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8BD8D0CE299AB09E00A488EC /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8BDDCEB629B3CFA200D9F173 /* MoviesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				8B643E2E29A22BAE005BD9D0 /* HorizontalMovieCell.swift */,
+				8BDDCEB629B3CFA200D9F173 /* MoviesTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 			files = (
 				8B15A2042989A83F0021D879 /* HomeController.swift in Sources */,
 				8B72FE7729A14E8D00E32295 /* HomeViewModel.swift in Sources */,
+				8BDDCEB729B3CFA200D9F173 /* MoviesTableViewCell.swift in Sources */,
 				8B879F7E29A7E44B0046C88F /* BaseRequestModel.swift in Sources */,
 				8B57D3FC299AD54400F530AD /* DiscoverController.swift in Sources */,
 				8B879F8229A7E6D90046C88F /* NowPlayingMovieRequest.swift in Sources */,
