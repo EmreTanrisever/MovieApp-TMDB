@@ -19,4 +19,11 @@ final class NetworkService: NetworkServiceProtocol {
             completion(response)
         }
     }
+
+    func getPopularMovies(completion: @escaping(Result<Movies, Error>) -> Void) {
+        guard let urlRequest = PopularMoviesRequest.shared.createURL() else { return }
+        NetworkManager.shared.sendRequest(urlRequest: urlRequest) { response in
+            completion(response)
+        }
+    }
 }
