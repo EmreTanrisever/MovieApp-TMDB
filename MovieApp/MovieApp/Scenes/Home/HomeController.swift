@@ -11,6 +11,7 @@ protocol HomeViewInterface: AnyObject {
     func prepareCollectionView()
     func collectionViewReloadData()
     func prepareTableView()
+    func tableViewReloadData()
 }
 
 class HomeController: UIViewController, HomeViewInterface {
@@ -159,6 +160,10 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     func prepareTableView() {
         moviesTableView.delegate = self
         moviesTableView.dataSource = self
+    }
+    
+    func tableViewReloadData() {
+        moviesTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
