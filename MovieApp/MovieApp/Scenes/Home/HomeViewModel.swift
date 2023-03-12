@@ -11,13 +11,16 @@ import Kingfisher
 protocol HomeViewModelInterface {
     var view: HomeViewInterface? { get set }
     var nowPlayingMovies: [Movie] { get set }
+    var moviesCategory: [String: [Movie]] { get set }
+    var genres: [Genre] { get set }
     
     func viewDidLoad()
+    func getGenres()
+    func returnKey(section: Int) -> String?
     func getNowPlayingMovies()
     func getPopularMovies()
     func getTopRatedMovies()
     func getUpComingMovies()
-    func returnKey(section: Int) -> String?
 }
 
 final class HomeViewModel {
@@ -25,8 +28,8 @@ final class HomeViewModel {
     private let service = NetworkService()
     
     var nowPlayingMovies: [Movie] = []
-//    var moviesCategory = ["Popular": [Movie](), "Top Rated": [Movie](), "Up Coming": [Movie]()].sorted(by: {$0.0 < $1.0})
     var moviesCategory: [String: [Movie]] = [:]
+    var genres: [Genre] = []
     
     init(_ view: HomeViewInterface) {
         self.view = view
@@ -37,12 +40,24 @@ final class HomeViewModel {
 extension HomeViewModel: HomeViewModelInterface {
 
     func viewDidLoad() {
+        getGenres()
         getNowPlayingMovies()
         getPopularMovies()
         getTopRatedMovies()
         getUpComingMovies()
         view?.prepareCollectionView()
         view?.prepareTableView()
+    }
+    
+    func getGenres() {
+        service.getGenres { response in
+            switch response {
+            case .success(let genres):
+                self.genres = genres.genres
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func returnKey(section: Int) -> String? {
