@@ -24,7 +24,7 @@ class HorizontalMovieCell: UICollectionViewCell {
         label.text = "Spiderman: No Way Home"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.byCharWrapping
+        label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.sizeToFit()
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
@@ -62,17 +62,6 @@ class HorizontalMovieCell: UICollectionViewCell {
 }
 
 extension HorizontalMovieCell {
-    func setData(movie: Movie) {
-        movieNameLabel.text = movie.title
-        ratingLabel.text = "\(movie.voteAvarage)/10 IMDB"
-        DispatchQueue.main.async {
-            let url = "https://image.tmdb.org/t/p/w500" + movie.posterPath!
-            self.moviePosterImageView.kf.setImage(with: URL(string: url))
-        }
-    }
-}
-
-extension HorizontalMovieCell {
     func configure() {
         contentView.layer.cornerRadius = 8
         
@@ -98,5 +87,16 @@ extension HorizontalMovieCell {
             ratingLabel.leadingAnchor.constraint(equalTo: starImageView.trailingAnchor, constant: 4),
             ratingLabel.topAnchor.constraint(equalTo: starImageView.topAnchor, constant: 4)
         ])
+    }
+}
+
+extension HorizontalMovieCell {
+    func setData(movie: Movie) {
+        movieNameLabel.text = movie.title
+        ratingLabel.text = "\(movie.voteAvarage)/10 IMDB"
+        DispatchQueue.main.async {
+            let url = "https://image.tmdb.org/t/p/w500" + movie.posterPath!
+            self.moviePosterImageView.kf.setImage(with: URL(string: url))
+        }
     }
 }

@@ -15,3 +15,7 @@ TabBar.bookmark = "Bookmark";
 Home.firstTitle = "Now Showing";
 Home.seeMoreButtonTitle = "See More";
 
+TopRated = "Top Rated";
+Popular = "Popular";
+UpComing = "Up Coming";
+

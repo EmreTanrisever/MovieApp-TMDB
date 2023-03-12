@@ -177,6 +177,11 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         ) as? MoviesTableViewCell else { return UITableViewCell() }
         cell.layer.backgroundColor = UIColor.clear.cgColor
         cell.backgroundColor = UIColor.clear
+        if let section = viewModel.returnKey(section: indexPath.section) {
+            if let movie = viewModel.moviesCategory[section]?[indexPath.row] {
+                cell.setData(movie: movie)
+            }
+        }
         return cell
     }
     
@@ -210,8 +215,7 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
             return button
         }()
         
-//        let titles = Array(viewModel.moviesCategory.keys).sorted()
-        sectionLabel.text = Array(viewModel.moviesCategory)[section].key
+        sectionLabel.text = viewModel.returnKey(section: section)
         
         seeMoreSectionButton.addTarget(self, action: #selector(seeMoreButtonTapped), for: .touchUpInside)
         

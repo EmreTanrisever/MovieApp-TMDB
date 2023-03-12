@@ -13,3 +13,8 @@ TabBar.discover = "Keşfet";
 TabBar.bookmark = "Kaydedilenler";
 
 Home.firstTitle = "Şimdi Gösterilenler";
+Home.seeMoreButtonTitle = "Daha Fazlasını Gör";
+
+TopRated = "En Beğenilenler";
+Popular = "Popüler";
+UpComing = "Yaklaşan";

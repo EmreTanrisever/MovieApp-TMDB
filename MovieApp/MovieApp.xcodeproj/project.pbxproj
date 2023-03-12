@@ -171,6 +171,26 @@
 			path = MovieAppUITests;
 			sourceTree = "<group>";
 		};
+		8B23AE2029BE4EF300BF43BC /* MoviesRequestModels */ = {
+			isa = PBXGroup;
+			children = (
+				8B879F8129A7E6D90046C88F /* NowPlayingMovieRequest.swift */,
+				8BC4CA8529B684200016F3A7 /* PopularMoviesRequest.swift */,
+				8B60654829B6970500739EA9 /* TopRatedMoviesRequest.swift */,
+				8B60654B29B6972300739EA9 /* UpComingMoviesRequest.swift */,
+			);
+			path = MoviesRequestModels;
+			sourceTree = "<group>";
+		};
+		8B23AE2129BE4EFE00BF43BC /* MovieResponseModels */ = {
+			isa = PBXGroup;
+			children = (
+				8B879F8E29A7EECD0046C88F /* Movie.swift */,
+				8B7F1C8B29AFD03D007CCD09 /* Movies.swift */,
+			);
+			path = MovieResponseModels;
+			sourceTree = "<group>";
+		};
 		8B57D3F9299AD51300F530AD /* Discover */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,10 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				8B879F7D29A7E44B0046C88F /* BaseRequestModel.swift */,
-				8B879F8129A7E6D90046C88F /* NowPlayingMovieRequest.swift */,
-				8BC4CA8529B684200016F3A7 /* PopularMoviesRequest.swift */,
-				8B60654829B6970500739EA9 /* TopRatedMoviesRequest.swift */,
-				8B60654B29B6972300739EA9 /* UpComingMoviesRequest.swift */,
+				8B23AE2029BE4EF300BF43BC /* MoviesRequestModels */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -243,8 +260,7 @@
 		8B879F8C29A7EEB70046C88F /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				8B879F8E29A7EECD0046C88F /* Movie.swift */,
-				8B7F1C8B29AFD03D007CCD09 /* Movies.swift */,
+				8B23AE2129BE4EFE00BF43BC /* MovieResponseModels */,
 			);
 			path = Response;
 			sourceTree = "<group>";

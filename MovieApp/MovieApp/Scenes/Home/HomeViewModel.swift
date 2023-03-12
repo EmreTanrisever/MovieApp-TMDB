@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Kingfisher
 
 protocol HomeViewModelInterface {
     var view: HomeViewInterface? { get set }
@@ -14,6 +15,9 @@ protocol HomeViewModelInterface {
     func viewDidLoad()
     func getNowPlayingMovies()
     func getPopularMovies()
+    func getTopRatedMovies()
+    func getUpComingMovies()
+    func returnKey(section: Int) -> String?
 }
 
 final class HomeViewModel {
@@ -35,8 +39,25 @@ extension HomeViewModel: HomeViewModelInterface {
     func viewDidLoad() {
         getNowPlayingMovies()
         getPopularMovies()
+        getTopRatedMovies()
+        getUpComingMovies()
         view?.prepareCollectionView()
         view?.prepareTableView()
+    }
+    
+    func returnKey(section: Int) -> String? {
+        var str: String?
+        switch section {
+        case 0:
+            str = "Popular"
+        case 1:
+            str = "Top Rated"
+        case 2:
+            str = "Up Coming"
+        default:
+            str = nil
+        }
+        return str
     }
     
     func getNowPlayingMovies() {
@@ -58,9 +79,39 @@ extension HomeViewModel: HomeViewModelInterface {
         
         service.getPopularMovies { response in
             switch response {
-            case .success(let movies):
+            case .success(let popularMovies):
                 DispatchQueue.main.async {
-                    self.moviesCategory["Popular"] = movies.results
+                    self.moviesCategory["Popular".localized] = popularMovies.results
+                    self.view?.tableViewReloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getTopRatedMovies() {
+        
+        service.getTopRatedMovies { response in
+            switch response {
+            case .success(let topRatedMovies):
+                DispatchQueue.main.async {
+                    self.moviesCategory["TopRated".localized] = topRatedMovies.results
+                    self.view?.tableViewReloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getUpComingMovies() {
+        
+        service.getUpComingMovies { response in
+            switch response {
+            case .success(let upComingMovies):
+                DispatchQueue.main.async {
+                    self.moviesCategory["UpComing".localized] = upComingMovies.results
                     self.view?.tableViewReloadData()
                 }
             case .failure(let error):
