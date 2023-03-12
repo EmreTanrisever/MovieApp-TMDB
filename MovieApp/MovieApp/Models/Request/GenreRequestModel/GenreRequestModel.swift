@@ -8,6 +8,8 @@
 import Foundation
 
 final class GenreRequestModel: BaseRequestModel {
+    static let shared = GenreRequestModel()
+    
     override var path: String {
         "/3/genre/movie/list"
     }

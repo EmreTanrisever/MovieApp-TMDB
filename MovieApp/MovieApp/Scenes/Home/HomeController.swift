@@ -76,7 +76,6 @@ class HomeController: UIViewController, HomeViewInterface {
         
         viewModel.viewDidLoad()
         configureUI()
-        
     }
 
     @objc private func seeMoreButtonTapped(_ sender: UIButton) {

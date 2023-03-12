@@ -12,6 +12,7 @@ protocol NetworkServiceProtocol {
     func getPopularMovies(completion: @escaping(Result<Movies, Error>) -> Void)
     func getTopRatedMovies(comletion: @escaping(Result<Movies, Error>) -> Void)
     func getUpComingMovies(comletion: @escaping(Result<Movies, Error>) -> Void)
+    func getGenres(comletion: @escaping(Result<Genres, Error>) -> Void)
 }
 
 final class NetworkService: NetworkServiceProtocol {
@@ -39,6 +40,13 @@ final class NetworkService: NetworkServiceProtocol {
     
     func getUpComingMovies(comletion: @escaping(Result<Movies, Error>) -> Void) {
         guard let urlRequest = UpComingMoviesRequest.shared.createURL() else { return }
+        NetworkManager.shared.sendRequest(urlRequest: urlRequest) { response in
+            comletion(response)
+        }
+    }
+    
+    func getGenres(comletion: @escaping (Result<Genres, Error>) -> Void) {
+        guard let urlRequest = GenreRequestModel.shared.createURL() else { return }
         NetworkManager.shared.sendRequest(urlRequest: urlRequest) { response in
             comletion(response)
         }
