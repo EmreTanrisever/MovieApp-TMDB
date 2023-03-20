@@ -16,6 +16,19 @@ protocol HomeViewInterface: AnyObject {
 
 class HomeController: UIViewController, HomeViewInterface {
     
+    private let scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.isScrollEnabled = true
+        return scroll
+    }()
+    
+    private let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private let leftView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(named: "homeleftview")
@@ -66,6 +79,7 @@ class HomeController: UIViewController, HomeViewInterface {
         tableView.backgroundColor = UIColor.clear
         tableView.layer.backgroundColor = UIColor.clear.cgColor
         tableView.separatorStyle = .none
+        tableView.isScrollEnabled = false
         return tableView
     }()
     
@@ -88,7 +102,11 @@ extension HomeController {
     func configureUI() {
         self.view.backgroundColor = .white
         
-        view.addSubviews(leftView, nowPlayingLabel, seeMoreButton, nowPlayingCollectionView, moviesTableView)
+        scrollView.contentSize = CGSize(width: view.frame.width, height: 3000)
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubviews(leftView, nowPlayingLabel, seeMoreButton, nowPlayingCollectionView, moviesTableView)
         
         seeMoreButton.addTarget(self, action: #selector(seeMoreButtonTapped), for: .touchUpInside)
         
@@ -97,26 +115,39 @@ extension HomeController {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            leftView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalToConstant: view.frame.width),
+            contentView.heightAnchor.constraint(equalToConstant: 7700),
+            
+            leftView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             leftView.topAnchor.constraint(equalTo: view.topAnchor),
-            leftView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            leftView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             leftView.widthAnchor.constraint(lessThanOrEqualToConstant: 133),
             
-            nowPlayingLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
-            nowPlayingLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            nowPlayingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),
+            nowPlayingLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor),
             
-            seeMoreButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            seeMoreButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
             seeMoreButton.topAnchor.constraint(equalTo: nowPlayingLabel.topAnchor, constant: -4),
             
             nowPlayingCollectionView.topAnchor.constraint(equalTo: nowPlayingLabel.bottomAnchor, constant: 24),
-            nowPlayingCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            nowPlayingCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            nowPlayingCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            nowPlayingCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             nowPlayingCollectionView.heightAnchor.constraint(lessThanOrEqualToConstant: 280),
             
             moviesTableView.topAnchor.constraint(equalTo: nowPlayingCollectionView.bottomAnchor, constant: 24),
-            moviesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            moviesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            moviesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            moviesTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            moviesTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            moviesTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
         ])
     }
