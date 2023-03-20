@@ -64,11 +64,11 @@ extension HomeViewModel: HomeViewModelInterface {
         var str: String?
         switch section {
         case 0:
-            str = "Popular"
+            str = "Popular".localized
         case 1:
-            str = "Top Rated"
+            str = "TopRated".localized
         case 2:
-            str = "Up Coming"
+            str = "UpComing".localized
         default:
             str = nil
         }
