@@ -151,6 +151,16 @@ extension HomeController {
             
         ])
     }
+    
+    func goToDetailViewController(at indexPath: IndexPath) {
+        let controller = DetailController()
+        let title = viewModel.returnKey(section: indexPath.section)!
+        guard let id = viewModel.moviesCategory[title]?[indexPath.row].id else {
+            return
+        }
+        controller.fetchTheMovie(id: id)
+        navigationController?.pushViewController(controller, animated: true)
+    }
 }
 
 // MARK: - NowPlaying CollectionView
@@ -180,9 +190,9 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
+        goToDetailViewController(at: indexPath)
     }
-    
+
 }
 
 //MARK: - Movies TableView
@@ -209,7 +219,7 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = UIColor.clear
         if let section = viewModel.returnKey(section: indexPath.section) {
             if let movie = viewModel.moviesCategory[section]?[indexPath.row] {
-                cell.setData(movie: movie)
+                cell.setData(movie: movie, genres: viewModel.genres)
             }
         }
         return cell
@@ -263,4 +273,7 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         return header
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        goToDetailViewController(at: indexPath)
+    }
 }

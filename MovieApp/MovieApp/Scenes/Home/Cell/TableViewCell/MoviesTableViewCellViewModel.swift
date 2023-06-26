@@ -32,9 +32,9 @@ extension MoviesTableViewCellViewModel: MoviesTableViewCellViewModelInterface {
     
     func performGenre(movie: Movie, genres: [Genre]) {
         var equalGenres = [Genre]()
-        for i in genres {
-            if movie.genreIDs.contains(i.id) {
-                equalGenres.append(i)
+        for genre in genres {
+            if movie.genreIDs.contains(genre.id) {
+                equalGenres.append(genre)
             }
         }
         self.genres = equalGenres

@@ -6,7 +6,7 @@
   
 */
 
-AppName = "FilmKu";
+AppName = "Movies";
 
 TabBar.home = "Movie List";
 TabBar.discover = "Discover";
@@ -19,3 +19,7 @@ TopRated = "Top Rated";
 Popular = "Popular";
 UpComing = "Up Coming";
 
+// MARK: - Network Errors
+Network.DecodeError = "Decode Error";
+Network.InvalidService = "This service does not exist.";
+Network.InvalidFormat = "This service doesn't exist in that format.";

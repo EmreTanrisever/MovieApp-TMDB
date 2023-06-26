@@ -27,9 +27,22 @@ extension NetworkManager {
     {
         self.urlSession.dataTask(with: urlRequest) { data, response, error in
             guard let data = data else { return }
-            guard let decodedData = self.convertData(T.self, data: data) else { return }
-            completion(.success(decodedData))
-            // data geliyor guard la çıkar custom error type yaz private init e bak
+            guard let httpResponse = response as? HTTPURLResponse else {
+                return
+            }
+            switch httpResponse.statusCode {
+            case 200...299:
+                guard let decodedData = self.convertData(T.self, data: data) else {
+                    return self.returnCompletionHandler(with: .failure(NetworkError.DecodeError), completion: completion)
+                }
+                self.returnCompletionHandler(with: .success(decodedData), completion: completion)
+            case 501:
+                self.returnCompletionHandler(with: .failure(NetworkError.InvalidService), completion: completion)
+            case 405:
+                self.returnCompletionHandler(with: .failure(NetworkError.InvalidFormat), completion: completion)
+            default:
+                break
+            }
         }.resume()
     }
     
@@ -40,6 +53,12 @@ extension NetworkManager {
             return data
         } catch {
             return nil
+        }
+    }
+    
+    private func returnCompletionHandler<T:Codable>(with result: Result<T, Error>, completion: @escaping(Result<T, Error>) -> Void) {
+        DispatchQueue.main.async {
+            completion(result)
         }
     }
 }

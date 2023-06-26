@@ -6,7 +6,7 @@
   
 */
 
-AppName = "FilmKu";
+AppName = "Filmler";
 
 TabBar.home = "Film Listesi";
 TabBar.discover = "Keşfet";
@@ -18,3 +18,8 @@ Home.seeMoreButtonTitle = "Daha Fazlasını Gör";
 TopRated = "En Beğenilenler";
 Popular = "Popüler";
 UpComing = "Yaklaşan";
+
+// MARK: - Network Errors
+Network.DecodeError = "Çözümleme Hatası";
+Network.InvalidService = "Bu hizmet mevcut değil.";
+Network.InvalidFormat = "Bu hizmet bu biçimde mevcut değil.";

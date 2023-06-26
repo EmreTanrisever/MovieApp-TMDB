@@ -63,4 +63,27 @@ class BaseRequestModel: BaseRequestModelInterface {
             return nil
         }
     }
+    
+    func createURLWithID(id: String) -> URLRequest? {
+        var component = URLComponents()
+        component.scheme = schema
+        component.host = host
+        component.path = path + id
+        var items: [URLQueryItem] = []
+    
+        for (key, value) in queryItems {
+            let quertItem = URLQueryItem(name: key, value: "\(value)")
+            items.append(quertItem)
+        }
+        
+        let apiKey = URLQueryItem(name: "api_key", value: "ea3d05bfba9559d3ec11726fd7d6b61e")
+        items.append(apiKey)
+        component.queryItems = items
+        
+        if let url = component.url {
+            return URLRequest(url: url)
+        } else {
+            return nil
+        }
+    }
 }
