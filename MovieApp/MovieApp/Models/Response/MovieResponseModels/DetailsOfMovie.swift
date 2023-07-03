@@ -22,8 +22,8 @@ struct DetailsOfMovie: Codable {
     let poster: String
     let release: String
     let revenue: Int
-    let average: Double
-    let count: Int
+    let voteAvarage: Double
+    let voteCount: Int
     
     enum CodingKeys: String, CodingKey {
         case adult, backdrop_path, budget, genres, homepage, id
@@ -34,7 +34,7 @@ struct DetailsOfMovie: Codable {
         case poster = "poster_path"
         case release = "release_date"
         case revenue
-        case average = "vote_average"
-        case count = "vote_count"
+        case voteAvarage = "vote_average"
+        case voteCount = "vote_count"
     }
 }
