@@ -13,8 +13,8 @@ class GenresCollectionViewCell: UICollectionViewCell {
     private let genreLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor(named: "homegenrebackcolor")
-        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        label.textColor = UIColor(named: "homegenrecolor")
+        label.font = UIFont.systemFont(ofSize: 12, weight: .semibold)
         return label
     }()
     
@@ -52,6 +52,6 @@ extension GenresCollectionViewCell {
 
 extension GenresCollectionViewCell {
     func setData(genre: Genre) {
-        genreLabel.text = genre.name
+        genreLabel.text = genre.name.uppercased()
     }
 }

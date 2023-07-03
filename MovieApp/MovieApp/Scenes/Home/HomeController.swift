@@ -7,7 +7,13 @@
 
 import UIKit
 
+enum UIType {
+    case tableView
+    case collectionView
+}
+
 protocol HomeViewInterface: AnyObject {
+    func configureUI()
     func prepareCollectionView()
     func collectionViewReloadData()
     func prepareTableView()
@@ -89,7 +95,7 @@ class HomeController: UIViewController, HomeViewInterface {
         super.viewDidLoad()
         
         viewModel.viewDidLoad()
-        configureUI()
+        
     }
 
     @objc private func seeMoreButtonTapped(_ sender: UIButton) {
@@ -152,13 +158,22 @@ extension HomeController {
         ])
     }
     
-    func goToDetailViewController(at indexPath: IndexPath) {
+    func goToDetailViewController(at indexPath: IndexPath, type: UIType) {
         let controller = DetailController()
-        let title = viewModel.returnKey(section: indexPath.section)!
-        guard let id = viewModel.moviesCategory[title]?[indexPath.row].id else {
-            return
+        
+        switch type {
+        case .tableView:
+            let title = viewModel.returnKey(section: indexPath.section)!
+            guard let id = viewModel.moviesCategory[title]?[indexPath.row].id else {
+                return
+            }
+            controller.fetchTheMovie(id: id)
+        case .collectionView:
+            let id = viewModel.nowPlayingMovies[indexPath.item].id
+            controller.fetchTheMovie(id: id)
         }
-        controller.fetchTheMovie(id: id)
+        
+        
         navigationController?.pushViewController(controller, animated: true)
     }
 }
@@ -185,12 +200,12 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource {
             withReuseIdentifier: HorizontalMovieCell.identifier,
             for: indexPath
         ) as? HorizontalMovieCell else { return UICollectionViewCell() }
-        cell.setData(movie: viewModel.nowPlayingMovies[indexPath.row])
+        cell.setData(movie: viewModel.nowPlayingMovies[indexPath.item])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        goToDetailViewController(at: indexPath)
+        goToDetailViewController(at: indexPath, type: .collectionView)
     }
 
 }
@@ -274,6 +289,6 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        goToDetailViewController(at: indexPath)
+        goToDetailViewController(at: indexPath, type: .tableView)
     }
 }

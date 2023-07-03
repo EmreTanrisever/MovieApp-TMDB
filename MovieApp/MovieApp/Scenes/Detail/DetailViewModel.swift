@@ -10,9 +10,10 @@ import Foundation
 protocol DetailViewModelInterface {
     var view: DetailViewInterface? { get set }
     var movie: DetailsOfMovie? { get set }
-    
+
     func viewDidLoad()
     func fetchTheMovie(id: Int)
+    
 }
 
 final class DetailViewModel {
@@ -30,14 +31,16 @@ extension DetailViewModel: DetailViewModelInterface {
     
     func viewDidLoad() {
         view?.configure()
+        view?.prepareCollectionView()
     }
     
     func fetchTheMovie(id: Int) {
-        service.getTheMovieDetail(id: "\(id)", completion: { response in
+        service.getTheMovieDetail(id: "\(id)", completion: { [weak self] response in
             switch response {
             case .success(let movie):
-                self.movie = movie
-                self.view?.fillUI()
+                self?.movie = movie
+                self?.view?.fillUI()
+                self?.view?.collectionViewReload()
             case .failure(let error):
                 print(error)
             }

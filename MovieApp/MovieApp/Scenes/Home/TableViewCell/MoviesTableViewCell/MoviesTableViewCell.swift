@@ -141,7 +141,6 @@ extension MoviesTableViewCell {
 
     func prepareCollectionView() {
         genresCollectionView.dataSource = self
-        genresCollectionView.delegate = self
     }
 
     func collectionViewReloadData() {
@@ -150,7 +149,7 @@ extension MoviesTableViewCell {
 }
 
 // MARK: - Genres Collection View Configure
-extension MoviesTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
+extension MoviesTableViewCell: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.genres.count

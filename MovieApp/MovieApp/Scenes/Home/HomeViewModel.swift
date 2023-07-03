@@ -40,6 +40,7 @@ final class HomeViewModel {
 extension HomeViewModel: HomeViewModelInterface {
 
     func viewDidLoad() {
+        view?.configureUI()
         getGenres()
         getNowPlayingMovies()
         getPopularMovies()
