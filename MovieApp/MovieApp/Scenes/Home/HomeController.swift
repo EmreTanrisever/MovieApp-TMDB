@@ -20,7 +20,7 @@ protocol HomeViewInterface: AnyObject {
     func tableViewReloadData()
 }
 
-class HomeController: UIViewController, HomeViewInterface {
+class HomeController: UIViewController {
     
     private let scrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -95,29 +95,17 @@ class HomeController: UIViewController, HomeViewInterface {
         super.viewDidLoad()
         
         viewModel.viewDidLoad()
-        
     }
 
     @objc private func seeMoreButtonTapped(_ sender: UIButton) {
-        print("See More Tapped")
+        let controller = SeeMoreViewController()
+        controller.setCategory(at: sender.tag)
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-// MARK: - ConfigureUI
+// MARK: - HomeController Functions
 extension HomeController {
-    func configureUI() {
-        self.view.backgroundColor = .white
-        
-        scrollView.contentSize = CGSize(width: view.frame.width, height: 3000)
-        
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
-        contentView.addSubviews(leftView, nowPlayingLabel, seeMoreButton, nowPlayingCollectionView, moviesTableView)
-        
-        seeMoreButton.addTarget(self, action: #selector(seeMoreButtonTapped), for: .touchUpInside)
-        
-        setConstraints()
-    }
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
@@ -158,9 +146,9 @@ extension HomeController {
         ])
     }
     
-    func goToDetailViewController(at indexPath: IndexPath, type: UIType) {
-        let controller = DetailController()
+    private func goToDetailViewController(at indexPath: IndexPath, type: UIType) {
         
+        let controller = DetailController()
         switch type {
         case .tableView:
             let title = viewModel.returnKey(section: indexPath.section)!
@@ -173,16 +161,25 @@ extension HomeController {
             controller.fetchTheMovie(id: id)
         }
         
-        
         navigationController?.pushViewController(controller, animated: true)
     }
 }
 
-// MARK: - NowPlaying CollectionView
-extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource {
-
-    func collectionViewReloadData() {
-        nowPlayingCollectionView.reloadData()
+// MARK: - HomeController Interface's Functions
+extension HomeController: HomeViewInterface {
+    
+    func configureUI() {
+        self.view.backgroundColor = .white
+        
+        scrollView.contentSize = CGSize(width: view.frame.width, height: 3000)
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubviews(leftView, nowPlayingLabel, seeMoreButton, nowPlayingCollectionView, moviesTableView)
+        
+        seeMoreButton.addTarget(self, action: #selector(seeMoreButtonTapped), for: .touchUpInside)
+        
+        setConstraints()
     }
     
     func prepareCollectionView() {
@@ -191,9 +188,30 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource {
         nowPlayingCollectionView.reloadData()
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        viewModel.nowPlayingMovies.count
+    func collectionViewReloadData() {
+        nowPlayingCollectionView.reloadData()
     }
+    
+    func prepareTableView() {
+        moviesTableView.delegate = self
+        moviesTableView.dataSource = self
+    }
+    
+    func tableViewReloadData() {
+        moviesTableView.reloadData()
+    }
+}
+
+// MARK: - CollectionView Delegate's Functions
+extension HomeController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        goToDetailViewController(at: indexPath, type: .collectionView)
+    }
+}
+
+// MARK: - CollectionView DataSource's Functions
+extension HomeController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = nowPlayingCollectionView.dequeueReusableCell(
@@ -204,45 +222,14 @@ extension HomeController: UICollectionViewDelegate, UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        goToDetailViewController(at: indexPath, type: .collectionView)
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        viewModel.nowPlayingMovies.count
     }
-
 }
 
-//MARK: - Movies TableView
-extension HomeController: UITableViewDelegate, UITableViewDataSource {
-    func prepareTableView() {
-        moviesTableView.delegate = self
-        moviesTableView.dataSource = self
-    }
+//MARK: - Movies TableView Delegate's Functions
+extension HomeController: UITableViewDelegate {
     
-    func tableViewReloadData() {
-        moviesTableView.reloadData()
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Array(viewModel.moviesCategory)[section].value.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = moviesTableView.dequeueReusableCell(
-            withIdentifier: MoviesTableViewCell.identifier,
-            for: indexPath
-        ) as? MoviesTableViewCell else { return UITableViewCell() }
-        cell.layer.backgroundColor = UIColor.clear.cgColor
-        cell.backgroundColor = UIColor.clear
-        if let section = viewModel.returnKey(section: indexPath.section) {
-            if let movie = viewModel.moviesCategory[section]?[indexPath.row] {
-                cell.setData(movie: movie, genres: viewModel.genres)
-            }
-        }
-        return cell
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.moviesCategory.count
-    }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
@@ -271,6 +258,7 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
         }()
         
         sectionLabel.text = viewModel.returnKey(section: section)
+        seeMoreSectionButton.tag = section + 1
         
         seeMoreSectionButton.addTarget(self, action: #selector(seeMoreButtonTapped), for: .touchUpInside)
         
@@ -290,5 +278,32 @@ extension HomeController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         goToDetailViewController(at: indexPath, type: .tableView)
+    }
+}
+
+// MARK: - TableView DataSource's Functions
+extension HomeController:  UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.moviesCategory.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return Array(viewModel.moviesCategory)[section].value.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = moviesTableView.dequeueReusableCell(
+            withIdentifier: MoviesTableViewCell.identifier,
+            for: indexPath
+        ) as? MoviesTableViewCell else { return UITableViewCell() }
+        cell.layer.backgroundColor = UIColor.clear.cgColor
+        cell.backgroundColor = UIColor.clear
+        if let section = viewModel.returnKey(section: indexPath.section) {
+            if let movie = viewModel.moviesCategory[section]?[indexPath.row] {
+                cell.setData(movie: movie, genres: viewModel.genres)
+            }
+        }
+        return cell
     }
 }

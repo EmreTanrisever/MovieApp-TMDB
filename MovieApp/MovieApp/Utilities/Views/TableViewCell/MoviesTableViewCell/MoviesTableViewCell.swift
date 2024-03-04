@@ -53,7 +53,7 @@ class MoviesTableViewCell: UITableViewCell, MoviesTableViewCellInterface {
     private let genresCollectionView: UICollectionView = {
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .horizontal
-        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 24)
+        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 24)
         collectionViewLayout.itemSize = CGSize(width: 120, height: 24)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.register(GenresCollectionViewCell.self, forCellWithReuseIdentifier: GenresCollectionViewCell.identifier)
@@ -121,7 +121,7 @@ extension MoviesTableViewCell {
             ratingLabel.leadingAnchor.constraint(equalTo: starImageView.trailingAnchor, constant: 4),
             ratingLabel.topAnchor.constraint(equalTo: starImageView.topAnchor, constant: 4),
             
-            genresCollectionView.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 16),
+            genresCollectionView.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor),
             genresCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             genresCollectionView.topAnchor.constraint(equalTo: starImageView.bottomAnchor, constant: 4),
             genresCollectionView.heightAnchor.constraint(equalToConstant: 24),
