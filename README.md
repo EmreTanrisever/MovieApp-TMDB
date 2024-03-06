@@ -29,7 +29,7 @@ This app was created as many pages. Tn the first page "themoviedb.org " movies w
 
 | Home Screen | Detail Screen |
 | --------------- | --------------- |
-| <img src="images/home3.png" alt="ss" width="220"/>  | <img src="images/Detail.png" alt="ss" width="220"/>  |
+| <img src="images/home3.png" alt="ss" width="220"/>  | <img src="images/detail.png" alt="ss" width="220"/>  |
 
 | SeeMore Screen | SeeMore Screen |
 | --------------- | --------------- |
