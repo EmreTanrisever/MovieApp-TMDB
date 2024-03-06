@@ -10,6 +10,7 @@ This app was created as many pages. Tn the first page "themoviedb.org " movies w
     <li>Protocol Oriented Programming</li>
     <li>Pagination</li>
     <li>GenericNetworkLayer</li>
+    <li>GenericStorageManager</li>
     <li>URLSession</li>
     <li>UIKIT</li>
     <li>TableView</li>
@@ -29,8 +30,8 @@ This app was created as many pages. Tn the first page "themoviedb.org " movies w
 | Home Screen | Detail Screen |
 | --------------- | --------------- |
 | <img src="images/home3.png" alt="ss" width="220"/>  | <img src="images/Detail.png" alt="ss" width="220"/>  |
+
 | SeeMore Screen | SeeMore Screen |
 | --------------- | --------------- |
 | <img src="images/seemore.png" alt="ss" width="220"/>  | <img src="images/seemore.png" alt="ss" width="220"/>  |
-</div>
 </div>
