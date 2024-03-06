@@ -212,7 +212,10 @@ class DetailController: UIViewController, DetailViewInterface {
     }
     
     @objc private func clickedBookmarkButton() {
-        
+        guard let movie = viewModel.movie else {
+            return
+        }
+        viewModel.saveMovie(movie: movie)
     }
 }
 
