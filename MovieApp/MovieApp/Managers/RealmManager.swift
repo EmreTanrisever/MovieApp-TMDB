@@ -38,4 +38,14 @@ extension RealmManager: RealmManagerInterface {
     func read<T: Object>(_ object: T.Type) -> [T] {
         return Array(realm.objects(object.self))
     }
+    
+    func delete<T: Object>(_ object: T) {
+        do {
+            try realm.write {
+                realm.delete(object)
+            }
+        } catch {
+            print("Err")
+        }
+    }
 }

@@ -30,4 +30,8 @@ final class MovieStorageService: MovieStorageServiceInterface {
     func getMovies() -> [MoviePersistance] {
         return RealmManager.shared.read(MoviePersistance.self)
     }
+    
+    func deleteTheMovie(movie: MoviePersistance) {
+        RealmManager.shared.delete(movie)
+    }
 }
