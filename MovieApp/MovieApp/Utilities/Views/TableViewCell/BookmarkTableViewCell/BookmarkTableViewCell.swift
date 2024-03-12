@@ -49,6 +49,30 @@ final class BookmarkTableViewCell: UITableViewCell {
         return label
     }()
     
+    private let popularity: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "ratingtextcolor")
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let revenueLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "ratingtextcolor")
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let releaseLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "ratingtextcolor")
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -80,6 +104,15 @@ final class BookmarkTableViewCell: UITableViewCell {
             movieNameLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 8),
             movieNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             movieNameLabel.trailingAnchor.constraint(equalTo: deleteMovieButton.leadingAnchor, constant: 8),
+
+            popularity.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 8),
+            popularity.topAnchor.constraint(equalTo: movieNameLabel.bottomAnchor, constant: 8),
+            
+            revenueLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 8),
+            revenueLabel.topAnchor.constraint(equalTo: popularity.bottomAnchor, constant: 8),
+            
+            releaseLabel.leadingAnchor.constraint(equalTo: movieImageView.trailingAnchor, constant: 8),
+            releaseLabel.topAnchor.constraint(equalTo: revenueLabel.bottomAnchor, constant: 8),
         ])
     }
     
@@ -99,7 +132,11 @@ extension BookmarkTableViewCell: BookmarkTableViewCellProtocol {
 
         contentView.addSubviews(
             movieImageView,
-            deleteMovieButton
+            deleteMovieButton,
+            movieNameLabel,
+            popularity,
+            revenueLabel,
+            releaseLabel
         )
         
         deleteMovieButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
@@ -116,5 +153,9 @@ extension BookmarkTableViewCell {
             let url = "https://image.tmdb.org/t/p/w500" + movie.poster
             self.movieImageView.kf.setImage(with: URL(string: url))
         }
+        movieNameLabel.text = movie.originalTitle
+        popularity.text = "Popularity: \(movie.popularity)"
+        revenueLabel.text = "Revenue: \(movie.revenue)"
+        releaseLabel.text = "Release: \(movie.release.dateFormetter())"
     }
 }

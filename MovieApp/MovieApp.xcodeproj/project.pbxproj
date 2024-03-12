@@ -97,7 +97,7 @@
 		8B72FE7629A14E8D00E32295 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		8B743A452A278CE700C41CE4 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		8B743A482A27915000C41CE4 /* DetailMovieRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieRequestModel.swift; sourceTree = "<group>"; };
-		8B7EF5422BA0EB5E0099D47B /* BookmarkTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookmarkTableViewCellViewModel.swift; path = MovieApp/Utilities/Views/TableViewCell/BookmarkTableViewCellViewModel.swift; sourceTree = SOURCE_ROOT; };
+		8B7EF5422BA0EB5E0099D47B /* BookmarkTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookmarkTableViewCellViewModel.swift; path = MovieApp/Utilities/Views/TableViewCell/BookmarkTableViewCell/BookmarkTableViewCellViewModel.swift; sourceTree = SOURCE_ROOT; };
 		8B7F1C8B29AFD03D007CCD09 /* Movies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movies.swift; sourceTree = "<group>"; };
 		8B7F1C8E29AFD2C8007CCD09 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		8B81DCD22A518C2C002048EA /* String+DateFormetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DateFormetter.swift"; sourceTree = "<group>"; };
@@ -116,7 +116,7 @@
 		8BDDCEB629B3CFA200D9F173 /* MoviesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesTableViewCell.swift; sourceTree = "<group>"; };
 		8BE166AF2B965BB300BBA7FB /* SeeMoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreViewController.swift; sourceTree = "<group>"; };
 		8BE166B12B965BBC00BBA7FB /* SeeMoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeMoreViewModel.swift; sourceTree = "<group>"; };
-		8BF84D132B9D0C6B00698C86 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		8BF84D132B9D0C6B00698C86 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BookmarkTableViewCell.swift; path = MovieApp/Utilities/Views/TableViewCell/BookmarkTableViewCell/BookmarkTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,11 +255,20 @@
 		8B643E2D29A22B80005BD9D0 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				8BF84D122B9D096600698C86 /* BookmarkTableViewCell */,
+				8B7EF5442BA0F0A00099D47B /* BookmarkTableViewCell */,
 				8BD8583A29C60686000CB199 /* MoviesTableViewCell */,
 				8BD8583929C6067B000CB199 /* MoviesCollectionViewCell */,
 			);
 			path = TableViewCell;
+			sourceTree = "<group>";
+		};
+		8B7EF5442BA0F0A00099D47B /* BookmarkTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8BF84D132B9D0C6B00698C86 /* BookmarkTableViewCell.swift */,
+				8B7EF5422BA0EB5E0099D47B /* BookmarkTableViewCellViewModel.swift */,
+			);
+			path = BookmarkTableViewCell;
 			sourceTree = "<group>";
 		};
 		8B879F7C29A7E43E0046C88F /* Models */ = {
@@ -427,15 +436,6 @@
 				8BE166B12B965BBC00BBA7FB /* SeeMoreViewModel.swift */,
 			);
 			path = SeeMore;
-			sourceTree = "<group>";
-		};
-		8BF84D122B9D096600698C86 /* BookmarkTableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				8BF84D132B9D0C6B00698C86 /* BookmarkTableViewCell.swift */,
-				8B7EF5422BA0EB5E0099D47B /* BookmarkTableViewCellViewModel.swift */,
-			);
-			path = BookmarkTableViewCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
