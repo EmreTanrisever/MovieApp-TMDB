@@ -14,6 +14,7 @@ protocol DetailViewInterface: AnyObject {
     func fillUI()
     func prepareCollectionView()
     func collectionViewReload()
+    func changeButtonImage()
 }
 
 class DetailController: UIViewController, DetailViewInterface {
@@ -215,7 +216,13 @@ class DetailController: UIViewController, DetailViewInterface {
         guard let movie = viewModel.movie else {
             return
         }
-        viewModel.saveMovie(movie: movie)
+        if viewModel.isSaved {
+            guard let movie = self.viewModel.movie else { return }
+            self.viewModel.deleteSavedMovie(movie: movie)
+        } else {
+            viewModel.saveMovie(movie: movie)
+        }
+        
     }
 }
 
@@ -315,6 +322,16 @@ extension DetailController {
         genreCollectionView.reloadData()
     }
     
+    func changeButtonImage() {
+        DispatchQueue.main.async {
+            if self.viewModel.isSaved {
+                self.bookmarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .normal)
+            } else {
+                self.bookmarkButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+            }
+        }
+    }
+    
 }
 
 // MARK: - Functions Of Protocol
@@ -360,7 +377,4 @@ extension DetailController: UICollectionViewDataSource {
         cell.setData(genre: genres[indexPath.row])
         return cell
     }
-    
-    
 }
-

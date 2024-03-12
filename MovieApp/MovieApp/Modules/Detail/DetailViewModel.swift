@@ -11,15 +11,19 @@ import RealmSwift
 protocol DetailViewModelInterface {
     var view: DetailViewInterface? { get set }
     var movie: DetailsOfMovie? { get set }
+    var savedMovies: [MoviePersistance]? { get set}
     
     func viewDidLoad()
     func fetchTheMovie(id: Int)
     func saveMovie(movie: DetailsOfMovie)
+    func fetchSavedMovie()
 }
 
 final class DetailViewModel {
     weak var view: DetailViewInterface?
     var movie: DetailsOfMovie?
+    var savedMovies: [MoviePersistance]?
+    var isSaved = false
     
     private let networkService = NetworkService()
     private let movieStorageService = MovieStorageService()
@@ -34,6 +38,7 @@ extension DetailViewModel: DetailViewModelInterface {
     func viewDidLoad() {
         view?.configure()
         view?.prepareCollectionView()
+        fetchSavedMovie()
     }
     
     func fetchTheMovie(id: Int) {
@@ -41,7 +46,9 @@ extension DetailViewModel: DetailViewModelInterface {
             switch response {
             case .success(let movie):
                 self?.movie = movie
+                self?.controlSavedMovie(movie: self?.movie)
                 self?.view?.fillUI()
+                self?.view?.changeButtonImage()
                 self?.view?.collectionViewReload()
             case .failure(let error):
                 print(error)
@@ -79,7 +86,33 @@ extension DetailViewModel: DetailViewModelInterface {
                 voteCount: movieDetail.voteCount
             )
             movieStorageService.saveMovie(movie: moviePersistance)
-            
         }
+        fetchSavedMovie()
+        controlSavedMovie(movie: self.movie)
+        self.view?.changeButtonImage()
+    }
+    
+    func fetchSavedMovie() {
+        savedMovies = movieStorageService.getMovies()
+    }
+    
+    func controlSavedMovie(movie: DetailsOfMovie?) {
+        savedMovies?.forEach({ moviePersistance in
+            if moviePersistance.imdbId == movie?.imdbId {
+                isSaved = true
+            }
+        })
+    }
+    
+    func deleteSavedMovie(movie: DetailsOfMovie) {
+        savedMovies?.forEach({ moviePersistance in
+            if moviePersistance.imdbId == movie.imdbId {
+                self.movieStorageService.deleteTheMovie(movie: moviePersistance)
+                fetchSavedMovie()
+                isSaved = false
+                controlSavedMovie(movie: self.movie)
+                self.view?.changeButtonImage()
+            }
+        })
     }
 }

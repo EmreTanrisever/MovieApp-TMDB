@@ -19,7 +19,6 @@ final class BookmarkController: UIViewController {
     private lazy var bookmarkTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
         tableView.dataSource = self
         tableView.register(BookmarkTableViewCell.self, forCellReuseIdentifier: BookmarkTableViewCell.identifier)
         tableView.rowHeight = 120
@@ -90,14 +89,6 @@ extension BookmarkController: UITableViewDataSource {
     }
     
     
-}
-
-// MARK: - TableView Delegate's Functions
-extension BookmarkController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        viewModel.deleteMovie(movie: viewModel.movies[indexPath.row])
-    }
 }
 
 // MARK: - BookMarkTableViewCellDelegate's Function
