@@ -21,7 +21,7 @@ final class BookmarkController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(BookMarkTableViewCell.self, forCellReuseIdentifier: BookMarkTableViewCell.identifier)
+        tableView.register(BookmarkTableViewCell.self, forCellReuseIdentifier: BookmarkTableViewCell.identifier)
         tableView.rowHeight = 120
         tableView.backgroundColor = UIColor.clear
         tableView.layer.backgroundColor = UIColor.clear.cgColor
@@ -81,10 +81,11 @@ extension BookmarkController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = bookmarkTableView.dequeueReusableCell(withIdentifier: BookMarkTableViewCell.identifier, for: indexPath) as? BookMarkTableViewCell else {
+        guard let cell = bookmarkTableView.dequeueReusableCell(withIdentifier: BookmarkTableViewCell.identifier, for: indexPath) as? BookmarkTableViewCell else {
             return UITableViewCell()
         }
         cell.setData(movie: viewModel.movies[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
@@ -96,5 +97,14 @@ extension BookmarkController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         viewModel.deleteMovie(movie: viewModel.movies[indexPath.row])
+    }
+}
+
+// MARK: - BookMarkTableViewCellDelegate's Function
+extension BookmarkController: BookmarkTableViewCellDelegate {
+    
+    func refreshTableView() {
+        viewModel.getSavedMovies()
+        tableViewReloadData()
     }
 }
