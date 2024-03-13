@@ -69,6 +69,7 @@ extension SeeMoreViewController: SeeMoreInterface {
     
     func tableViewReloadData() {
         DispatchQueue.main.async {
+         print("ok")
             self.moviesTableView.reloadData()
         }
     }
@@ -85,13 +86,20 @@ extension SeeMoreViewController: UITableViewDelegate {
             navigationController?.pushViewController(controller, animated: true)
         }
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if((scrollView.contentOffset.y + scrollView.frame.size.height) > scrollView.contentSize.height) {
+            viewModel.getPagination()
+        }
+    }
 }
 
 // MARK: - TableViewDataSource's Functions
 extension SeeMoreViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        guard let movies = viewModel.movies else { return 0 }
+        return movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

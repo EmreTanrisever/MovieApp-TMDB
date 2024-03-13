@@ -11,6 +11,7 @@ protocol SeeMoreViewModelInterface {
     
     func viewDidLoad()
     func setCategoryId(at id: Int)
+    func getPagination()
 }
 
 final class SeeMoreViewModel {
@@ -18,6 +19,7 @@ final class SeeMoreViewModel {
     private var networkService = NetworkService()
     var movies: [Movie]?
     var genres: [Genre]?
+    var currentSection: MovieSections?
     
     init(view: SeeMoreInterface? = nil) {
         self.view = view
@@ -37,17 +39,35 @@ extension SeeMoreViewModel: SeeMoreViewModelInterface {
         switch id {
         case 0:
             getNowShowingMovies()
+            self.currentSection = .nowShowing
         case 1:
             getPopularMovies()
+            self.currentSection = .popular
         case 2:
             getTopRatedMovies()
+            self.currentSection = .topRated
         case 3:
             getUpComingMovies()
+            self.currentSection = .upComing
         default:
             print("err")
         }
     }
     
+    func getPagination() {
+        switch currentSection {
+        case .nowShowing:
+            getNowPlayingNextPage()
+        case .popular: break
+            
+        case .topRated: break
+            
+        case .upComing: break
+            
+        case .none:
+             break
+        }
+    }
 }
 
 // MARK: - SeeMoreViewModel's Functions
@@ -111,6 +131,21 @@ extension SeeMoreViewModel {
             switch result {
             case let .success(genres):
                 self?.genres = genres.genres
+                self?.view?.tableViewReloadData()
+            case let .failure(err):
+                print(err)
+            }
+        }
+    }
+    
+    private func getNowPlayingNextPage() {
+        
+        networkService.getNowPlayingPagination { [weak self] result in
+            switch result {
+            case let .success(movies):
+                movies.results.forEach { movie in
+                    self?.movies?.append(movie)
+                }
                 self?.view?.tableViewReloadData()
             case let .failure(err):
                 print(err)
