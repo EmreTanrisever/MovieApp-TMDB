@@ -9,6 +9,7 @@ import Foundation
 
 final class UpComingMoviesRequest: BaseRequestModel {
     static let shared = UpComingMoviesRequest()
+    var pageNumber = 1
     
     override var path: String {
         "/3/movie/upcoming"
@@ -17,7 +18,7 @@ final class UpComingMoviesRequest: BaseRequestModel {
     override var queryItems: [String : Any] {
         [
             "language":"en-US",
-            "page": 1
+            "page": pageNumber
         ]
     }
 }

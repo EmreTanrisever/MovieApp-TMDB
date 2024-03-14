@@ -9,6 +9,7 @@ import Foundation
 
 final class PopularMoviesRequest: BaseRequestModel {
     static let shared = PopularMoviesRequest()
+    var pageNumber = 1
     
     override var path: String {
         "/3/movie/popular"
@@ -17,7 +18,7 @@ final class PopularMoviesRequest: BaseRequestModel {
     override var queryItems: [String : Any] {
         [
             "language":"en-US",
-            "page": 1
+            "page": pageNumber
         ]
     }
 }

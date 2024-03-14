@@ -15,6 +15,10 @@ protocol NetworkServiceProtocol {
     func getGenres(comletion: @escaping(Result<Genres, Error>) -> Void)
     func getTheMovieDetail(id: String, completion: @escaping (Result<DetailsOfMovie, Error>) -> Void)
     func getNowPlayingPagination(completion: @escaping (Result<Movies, Error>) -> Void)
+    func getPopularPagination(completion: @escaping (Result<Movies, Error>) -> Void)
+    func getTopRatedPagination(completion: @escaping (Result<Movies, Error>) -> Void)
+    func getUpComingPagination(completion: @escaping (Result<Movies, Error>) -> Void)
+    func returnFirstPage()
 }
 
 final class NetworkService: NetworkServiceProtocol {
@@ -25,7 +29,7 @@ final class NetworkService: NetworkServiceProtocol {
             completion(response)
         }
     }
-
+    
     func getPopularMovies(completion: @escaping(Result<Movies, Error>) -> Void) {
         guard let urlRequest = PopularMoviesRequest.shared.createURL() else { return }
         NetworkManager.shared.sendRequest(urlRequest: urlRequest) { response in
@@ -67,5 +71,36 @@ final class NetworkService: NetworkServiceProtocol {
         NetworkManager.shared.sendRequest(urlRequest: urlRequest) { response in
             completion(response)
         }
+    }
+    
+    func getPopularPagination(completion: @escaping (Result<Movies, Error>) -> Void) {
+        PopularMoviesRequest.shared.pageNumber += 1
+        guard let urlRequest = PopularMoviesRequest.shared.createURL() else { return }
+        NetworkManager.shared.sendRequest(urlRequest: urlRequest) { response in
+            completion(response)
+        }
+    }
+    
+    func getTopRatedPagination(completion: @escaping (Result<Movies, Error>) -> Void) {
+        TopRatedMoviesRequest.shared.pageNumber += 1
+        guard let urlRequest = TopRatedMoviesRequest.shared.createURL() else { return }
+        NetworkManager.shared.sendRequest(urlRequest: urlRequest) { response in
+            completion(response)
+        }
+    }
+    
+    func getUpComingPagination(completion: @escaping (Result<Movies, Error>) -> Void) {
+        UpComingMoviesRequest.shared.pageNumber += 1
+        guard let urlRequest = UpComingMoviesRequest.shared.createURL() else { return }
+        NetworkManager.shared.sendRequest(urlRequest: urlRequest) { response in
+            completion(response)
+        }
+    }
+    
+    func returnFirstPage() {
+        NowPlayingMovieRequest.shared.pageNumber = 1
+        PopularMoviesRequest.shared.pageNumber = 1
+        TopRatedMoviesRequest.shared.pageNumber = 1
+        UpComingMoviesRequest.shared.pageNumber = 1
     }
 }

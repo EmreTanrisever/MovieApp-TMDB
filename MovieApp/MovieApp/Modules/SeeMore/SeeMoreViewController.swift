@@ -69,7 +69,6 @@ extension SeeMoreViewController: SeeMoreInterface {
     
     func tableViewReloadData() {
         DispatchQueue.main.async {
-         print("ok")
             self.moviesTableView.reloadData()
         }
     }
