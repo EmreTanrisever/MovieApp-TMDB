@@ -19,6 +19,8 @@ This app was created as many pages. Tn the first page "themoviedb.org " movies w
     <li>Spm</li>
     <li>KingFisher</li>
     <li>Realm</li>
+    <li>Pagination</li>
+
 </ul>
 
 <div align="center">
@@ -31,7 +33,7 @@ This app was created as many pages. Tn the first page "themoviedb.org " movies w
 | --------------- | --------------- |
 | <img src="images/home3.png" alt="ss" width="220"/>  | <img src="images/detail.png" alt="ss" width="220"/>  |
 
-| SeeMore Screen | SeeMore Screen |
+| SeeMore Screen | BookMarkScreen Screen |
 | --------------- | --------------- |
-| <img src="images/seemore.png" alt="ss" width="220"/>  | <img src="images/seemore.png" alt="ss" width="220"/>  |
+| <img src="images/seemore.png" alt="ss" width="220"/>  | <img src="images/bookmark.png" alt="ss" width="220"/>  |
 </div>
