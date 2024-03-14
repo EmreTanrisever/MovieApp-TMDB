@@ -204,6 +204,12 @@ class DetailController: UIViewController, DetailViewInterface {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        viewModel.viewWillApear()
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         self.tabBarController?.title = "AppName".localized
     }

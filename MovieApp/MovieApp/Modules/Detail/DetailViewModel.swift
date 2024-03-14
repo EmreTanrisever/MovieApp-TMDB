@@ -17,6 +17,7 @@ protocol DetailViewModelInterface {
     func fetchTheMovie(id: Int)
     func saveMovie(movie: DetailsOfMovie)
     func fetchSavedMovie()
+    func viewWillApear()
 }
 
 final class DetailViewModel {
@@ -39,6 +40,10 @@ extension DetailViewModel: DetailViewModelInterface {
         view?.configure()
         view?.prepareCollectionView()
         fetchSavedMovie()
+    }
+    
+    func viewWillApear() {
+        controlSavedMovie(movie: movie)
     }
     
     func fetchTheMovie(id: Int) {
@@ -97,10 +102,14 @@ extension DetailViewModel: DetailViewModelInterface {
     }
     
     func controlSavedMovie(movie: DetailsOfMovie?) {
+        fetchSavedMovie()
         savedMovies?.forEach({ moviePersistance in
             if moviePersistance.imdbId == movie?.imdbId {
                 isSaved = true
+                return
+            } else {                isSaved = false
             }
+            self.view?.changeButtonImage()
         })
     }
     
